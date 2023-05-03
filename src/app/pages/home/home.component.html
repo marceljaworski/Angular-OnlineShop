@@ -13,8 +13,8 @@ class="min-h-full max-w-7x1 mx-auto border-x"
             [rowHeight]="rowHeight"
             >
             <mat-grid-tile>
-                <!-- (addToCart)="onAddToCart($event)" -->
                 <app-product-box 
+                (addToCart)="onAddToCart($event)"
                 class="w-full" [fullWidthMode]="cols === 1"></app-product-box>
             </mat-grid-tile> 
              
