@@ -1,18 +1,19 @@
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 dotenv.config()
-const express = require("express");
-const cors = require("cors");
-const bodyparser = require("body-parser");
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import Stripe from 'stripe';
 
 const app = express();
 app.use(express.static("public"));
-app.use(bodyparser.urlencoded({ extended: flase }));
-app.use(bodyparser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(cors({ origin: true, credentials: true}));
 
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY
 
-const stripe = require("stripe")(`${STRIPE_SECRET_KEY}`)
+const stripe = new Stripe(STRIPE_SECRET_KEY);
 
 app.post("/checkout", async (req, res, next) => {
     try{
@@ -35,3 +36,5 @@ app.post("/checkout", async (req, res, next) => {
         next(error);
     }
 });
+
+app.listen(4242, () => console.log('app is running on port 4242'));
