@@ -16,18 +16,22 @@ const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY
 const stripe = new Stripe(STRIPE_SECRET_KEY);
 
 app.post("/checkout", async (req, res, next) => {
+    console.log(req.body)
     try{
         const session = await stripe.checkout.sessions.create({
             line_items: req.body.items.map((item) => ({
-                currency: "EUR",
-                Product_data: {
-                    name: item.name,
-                    images: [item.product]
+                price_data: {
+                    currency: 'EUR',
+                    product_data: {
+                        name: item.name,
+                        images: [item.product]
+                    },
+                    unit_amount: item.price * 100,
                 },
-                unit_amount: item.price * 100
+                quantity: item.quantity,
             })),
             mode: "payment",
-            succes_url: "http://localhost:4242/success.html",
+            success_url: "http://localhost:4242/success.html",
             cancel_url: "http://localhost:4242/cancel.html",
         });
 

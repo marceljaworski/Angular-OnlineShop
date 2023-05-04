@@ -65,7 +65,7 @@ export class CartComponent {
 
   onCheckout(): void {
     this.http.post('http://localhost:4242/checkout', {
-      itmes: this.cart.items
+      items: this.cart.items
     }).subscribe(async(res: any) => {
       let stripe = await loadStripe('pk_test_51N3ftrBlVGfufjgyeUjpKHPFunzkJSK1DaMciu9iHEQTjUmav7xBjRrsJjjemS74w3wVfCzRHplV8XC3zfGh2inq00c4JUZzpC');
       stripe?.redirectToCheckout({
